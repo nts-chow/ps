@@ -1,0 +1,31 @@
+;###connect host
+connect '172.28.92.23 /ssh /auth=password /user=root /passwd=password'
+
+pause  1
+
+;###create log
+
+gettime logstr "log-%Y%m%d-%H%M%S.txt"
+getdir curdir
+sprintf '%s\%s' curdir logstr
+filename = inputstr
+logopen filename 0 1 1
+logwrite 'Log start'#13#10
+
+looptimes = 1 ; 
+while looptimes < 11
+ ;###run cmd 
+
+ sendln "ls -l"
+ wait "#"
+looptimes = looptimes + 1 
+endwhile
+
+;###closelog
+Logclose
+
+;###disconnect
+disconnect 
+closett
+
+执行bat文件就可以运行ttl脚本了.
